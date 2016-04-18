@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/userquestion_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/userquestion_card"
+        style="@style/MyCardViewTheme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="4dp"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Error Descriptoin : Cannot return to redirect Uri"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                android:textStyle="bold"
+
+                />
+
+            <TextView
+                android:id="@+id/link_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:autoLink="all"
+                android:clickable="true"
+                android:linksClickable="true"
+                android:text="https://api.stackexchange.com/docs/me-questions#order=descsort=activityfilter=defaultsite=stackoverflowrun=true"
+
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tags_text"
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="java , android , api, fragment , sdk , visio , parse
+                , java , android , iso , api , fragment"
+                android:textColor="#e0e0e0" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <View
+                    android:layout_width="33dp"
+                    android:layout_height="34dp"
+                    android:background="@drawable/ic_keyboard_arrow_up"></View>
+
+                <TextView
+                    android:id="@+id/score"
+                    android:layout_width="33dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+
+                    android:text="30sp" />
+
+                <TextView
+                    android:id="@+id/date_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="right"
+                    android:text="123456"
+                    android:textStyle="italic" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+
+</RelativeLayout>

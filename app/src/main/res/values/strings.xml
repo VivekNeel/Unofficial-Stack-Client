@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">StackClient2</string>
+
+    <string name="stack_callback">oauth://t4jsample</string>
+    <string name="stack_consumer_key">KMSWnGjpWRmhYZOpbLRbDJceM</string>
+
+    <string name="stack_consumer_secret">FyZg5iHsCYgkZ4b1dOZAMw((</string>
+    <string name="stack_code">code</string>
+
+    <string name="error_dialog_message">Something went wrong , Would you like to retry?</string>
+
+</resources>
