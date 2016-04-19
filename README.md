@@ -15,4 +15,4 @@ An Android Application for stackoverflow.com
     compile 'com.android.support:design:23.2.1'
     compile 'com.jakewharton:butterknife:7.0.1'
     
-    As always, My sincere thanks to the original author of libraries.
+    As always, My sincere thanks to the original authors of libraries.
