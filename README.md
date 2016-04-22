@@ -1,4 +1,6 @@
 # Unofficial-Stack-Client
+[![Baikal](https://baikal.io/badges/Vivekkumar/unofficialstackclient)](https://baikal.io/Vivekkumar/unofficialstackclient)
+
 An Android Application for stackoverflow.com
 
 #Libraries used
