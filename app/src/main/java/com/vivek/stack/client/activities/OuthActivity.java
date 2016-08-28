@@ -2,11 +2,13 @@ package com.vivek.stack.client.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
@@ -30,12 +32,13 @@ public class OuthActivity extends AppCompatActivity {
             .state(Constants.API_STATE)
             .callback(Constants.API_REDIRECT_URI)
             .build(StackExchangeApi.instance());
+    private ProgressDialog progressDialog;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog = new ProgressDialog(this);
         String url = service.getAuthorizationUrl();
 
         LinearLayout root = new LinearLayout(this);
@@ -44,19 +47,25 @@ public class OuthActivity extends AppCompatActivity {
         WebView wv = new WebView(this);
         wv.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT));
         wv.getSettings().setJavaScriptEnabled(true);
-
-
-        progressDialog.show();
-        progressDialog.setMessage("Loading..");
         wv.loadUrl(url);
         root.addView(wv);
 
         setContentView(root);
-        wv.setWebViewClient(new WebViewClient() {
+        wv.setWebViewClient(new OuthWebClient());
+
+    }
+        private class OuthWebClient extends WebViewClient {
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                progressDialog.show();
+                progressDialog.setMessage("Loading..");
+
+            }
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-
                 if (url.contains(getResources().getString(R.string.stack_callback))) {
                     Uri uri = Uri.parse(url);
 
@@ -72,8 +81,12 @@ public class OuthActivity extends AppCompatActivity {
                 }
                 return false;
             }
-        });
-    }
 
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                progressDialog.dismiss();
+            }
+        }
+        }
 
-}
