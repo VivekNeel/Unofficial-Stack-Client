@@ -21,7 +21,7 @@ import com.vivek.stack.client.R;
 import com.vivek.stack.client.util.CheckConnection;
 import com.vivek.stack.client.util.Constants;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -54,20 +54,18 @@ public class QuestionActivity extends AppCompatActivity {
     public static SharedPreferences mSharedPreferences;
 
 
-    @Bind(R.id.login_button)
+    @BindView(R.id.login_button)
     Button login;
-    @Bind(R.id.guest_user_button)
+    @BindView(R.id.guest_user_button)
     Button guest;
-    @Bind(R.id.loggedin_user)
-    Button loggedin;
-    @Bind(R.id.container)
+    @BindView(R.id.container)
     LinearLayout linearLayout;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity_two);
+        setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         initStackConfigs();
         mSharedPreferences = getSharedPreferences(PREF_NAME, 0);
@@ -113,45 +111,27 @@ public class QuestionActivity extends AppCompatActivity {
 
         isLoggedIn = mSharedPreferences.getBoolean(PREF_KEY_STACK_LOGIN, false);
 
-
-        loggedin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (!checkConnection.isConnected()) {
-                    Snackbar.make(linearLayout, "you are not connected to the internet!", Snackbar.LENGTH_LONG).
-                            setAction("Try again", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
-                                    startActivity(intent);
-                                }
-                            }).show();
-                } else {
-                    Intent intent = new Intent(QuestionActivity.this, UserLoggedInQuestions.class);
-                    startActivity(intent);
-
-                }
-            }
-        });
-
-
     }
 
 
-    public class GetAcessToken extends AsyncTask<String, Void, String> {
-
+    public class GetAccessToken extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... params) {
             String verifier = params[0];
             OAuth2AccessToken oAuth2AccessToken = service.getAccessToken(params[0]);
             saveStackInfo(oAuth2AccessToken, verifier);
-
-
             return oAuth2AccessToken.toString();
         }
 
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if(s != null && !s.isEmpty()){
+                Intent intent = new Intent(QuestionActivity.this , UserLoggedInQuestions.class);
+                startActivity(intent);
+            }
+        }
     }
 
 
@@ -197,11 +177,8 @@ public class QuestionActivity extends AppCompatActivity {
 
 
     private void login() {
-
         Intent intent = new Intent(QuestionActivity.this, OuthActivity.class);
         startActivityForResult(intent, 20);
-
-
     }
 
 
@@ -211,8 +188,7 @@ public class QuestionActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             String verifier = data.getExtras().getString(getString(R.string.stack_code));
             try {
-                new GetAcessToken().execute(verifier);
-                //      button.setText(oAuth2AccessToken.toString());
+                new GetAccessToken().execute(verifier);
             } catch (Exception e) {
                 Snackbar.make(linearLayout, "Stack login failed", Snackbar.LENGTH_LONG).show();
             }
