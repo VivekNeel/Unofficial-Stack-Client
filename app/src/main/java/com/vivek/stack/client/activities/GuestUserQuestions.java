@@ -13,7 +13,7 @@ import com.vivek.stack.client.fragments.GuestUser.GuesUserUnAnsweredQuestionsFra
 import com.vivek.stack.client.fragments.GuestUser.GuestUserFeaturedQuestionsFragment;
 import com.vivek.stack.client.fragments.GuestUser.GuestUserQuestionsFragment;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -21,11 +21,11 @@ import butterknife.ButterKnife;
  */
 public class GuestUserQuestions extends AppCompatActivity {
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.viewpager)
+    @BindView(R.id.viewpager)
     ViewPager viewPager;
-    @Bind(R.id.tablayout)
+    @BindView(R.id.tablayout)
     TabLayout tabLayout;
 
     @Override

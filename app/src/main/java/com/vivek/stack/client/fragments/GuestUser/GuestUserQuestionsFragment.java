@@ -23,7 +23,7 @@ import com.vivek.stack.client.util.Constants;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit.Callback;
 import retrofit.GsonConverterFactory;
@@ -37,11 +37,11 @@ public class GuestUserQuestionsFragment extends Fragment {
 
 
     private List<Item> itemList;
-    @Bind(R.id.userquestion_rv)
+    @BindView(R.id.userquestion_rv)
     RecyclerView recyclerView;
     private GuestUserQuestionAdapter guestUserQuestionAdapter;
     private ProgressDialog progressDialog;
-    @Bind(R.id.fragment_container)
+    @BindView(R.id.fragment_container)
     LinearLayout linearLayout;
 
     public GuestUserQuestionsFragment() {

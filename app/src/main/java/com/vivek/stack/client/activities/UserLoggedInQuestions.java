@@ -14,7 +14,7 @@ import com.vivek.stack.client.adapter.ViewPagerAdapter;
 import com.vivek.stack.client.fragments.LoggedIn.AnsweredQuestionFragment;
 import com.vivek.stack.client.fragments.LoggedIn.LoggedInUserQuestionFragment;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -22,11 +22,11 @@ import butterknife.ButterKnife;
  */
 public class UserLoggedInQuestions extends AppCompatActivity {
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.viewpager)
+    @BindView(R.id.viewpager)
     ViewPager viewPager;
-    @Bind(R.id.tablayout)
+    @BindView(R.id.tablayout)
     TabLayout tabLayout;
 
 
