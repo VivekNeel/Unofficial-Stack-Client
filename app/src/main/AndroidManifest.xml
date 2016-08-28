@@ -20,32 +20,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.VIEW" />-->
-
-            <!--<category android:name="android.intent.category.DEFAULT" />-->
-            <!--<category android:name="android.intent.category.BROWSABLE" />-->
-
-            <!--<data-->
-            <!--android:host="t4jsample"-->
-            <!--android:scheme="oauth" />-->
-            <!--</intent-filter>-->
-            <!--</activity>-->
         </activity>
         <activity
             android:name=".activities.OuthActivity"
             android:label="@string/app_name" />
-
-        <!--<activity android:name=".activities.OuthActivity">-->
-        <!--<intent-filter >-->
-
-        <!--<action android:name="android.intent.action.VIEW"/>-->
-        <!--<data android:host="testhost"-->
-        <!--android:scheme="test"/>-->
-        <!--<category android:name="android.intent.category.BROWSABLE"-->
-        <!--/>-->
-        <!--</intent-filter>-->
-        <!--</activity>-->
 
         <activity
             android:name=".activities.UserLoggedInQuestions"
