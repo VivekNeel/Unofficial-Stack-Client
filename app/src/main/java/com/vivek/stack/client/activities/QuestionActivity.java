@@ -59,7 +59,8 @@ public class QuestionActivity extends AppCompatActivity {
     @BindView(R.id.guest_user_button)
     Button guest;
     @BindView(R.id.container)
-    LinearLayout linearLayout;
+    LinearLayout loginViewContainer;
+    private SharedPreferences.Editor editor;
 
 
     @Override
@@ -70,12 +71,15 @@ public class QuestionActivity extends AppCompatActivity {
         initStackConfigs();
         mSharedPreferences = getSharedPreferences(PREF_NAME, 0);
 
+        isLoggedIn = mSharedPreferences.getBoolean(PREF_KEY_STACK_LOGIN , false);
+        checkLoggenInStatus();
+
         progressDialog = new ProgressDialog(this);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!checkConnection.isConnected()) {
-                    Snackbar.make(linearLayout, "you are not connected to the internet!", Snackbar.LENGTH_LONG).
+                    Snackbar.make(loginViewContainer, "you are not connected to the internet!", Snackbar.LENGTH_LONG).
                             setAction("Try again", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -93,7 +97,7 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!checkConnection.isConnected()) {
-                    Snackbar.make(linearLayout, "you are not connected to the internet!", Snackbar.LENGTH_LONG).
+                    Snackbar.make(loginViewContainer, "you are not connected to the internet!", Snackbar.LENGTH_LONG).
                             setAction("Try again", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -113,6 +117,11 @@ public class QuestionActivity extends AppCompatActivity {
 
     }
 
+    private void buildUserLoggedInIntent() {
+        Intent intent = new Intent(QuestionActivity.this , UserLoggedInQuestions.class);
+        startActivity(intent);
+    }
+
 
     public class GetAccessToken extends AsyncTask<String, Void, String> {
 
@@ -128,36 +137,22 @@ public class QuestionActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             if(s != null && !s.isEmpty()){
+
                 Intent intent = new Intent(QuestionActivity.this , UserLoggedInQuestions.class);
                 startActivity(intent);
             }
         }
     }
 
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-//        if (isLoggedIn) {
-//            loggedin.setVisibility(View.VISIBLE);
-//        } else {
-//            loggedin.setVisibility(View.GONE);
-//        }
-
-
-    }
-
-
     private void saveStackInfo(OAuth2AccessToken accessToken, String verifier) {
         try {
 
 			/* Storing oAuth tokens to shared preferences */
-            SharedPreferences.Editor e = mSharedPreferences.edit();
-            e.putString(PREF_KEY_OAUTH_TOKEN, accessToken.getAccessToken());
-
-            e.putString(PREF_KEY, verifier);
-            e.putBoolean(PREF_KEY_STACK_LOGIN, true);
-            e.commit();
+            editor = mSharedPreferences.edit();
+            editor.putString(PREF_KEY_OAUTH_TOKEN, accessToken.getAccessToken());
+            editor.putString(PREF_KEY, verifier);
+            editor.putBoolean(PREF_KEY_STACK_LOGIN, true);
+            editor.commit();
 
 
         } catch (Exception e1) {
@@ -190,12 +185,25 @@ public class QuestionActivity extends AppCompatActivity {
             try {
                 new GetAccessToken().execute(verifier);
             } catch (Exception e) {
-                Snackbar.make(linearLayout, "Stack login failed", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(loginViewContainer, "Stack login failed", Snackbar.LENGTH_LONG).show();
             }
         }
 
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkLoggenInStatus();
+    }
 
+    private void checkLoggenInStatus() {
+        if(isLoggedIn){
+            loginViewContainer.setVisibility(View.GONE);
+            buildUserLoggedInIntent();
+        } else{
+            loginViewContainer.setVisibility(View.VISIBLE);
+        }
+    }
 }
